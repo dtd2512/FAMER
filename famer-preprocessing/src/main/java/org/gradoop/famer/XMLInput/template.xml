@@ -1,0 +1,199 @@
+<root>
+	<!--run: obligatory-->
+	<run>
+		<!--RunId: optional-->
+		<!--arbitrary number for run identification-->
+		<!--allowed values: arbitrary integer-->
+		<!--default: 0-->
+		<RunId>0</RunId>
+		<!--IntraDataSetComparison: optional-->
+		<!--if pairs inside one source can be matched, IntraDataSetComparison must be set to "true" -->
+		<!--allowed values: {false, true} -->
+		<!--default: false-->
+		<IntraDatasetComparison>false</IntraDatasetComparison>
+		<!--EdgeLable: optional-->
+		<!--the lable of output edges -->
+		<!--allowed values: arbitrary string -->
+		<!--default: value-->
+		<EdgeLable>value</EdgeLable>
+		<!--BidirectionalOutput: optional-->
+		<!--if the relation between two entities are represented as a bidirectional edge, BidirectionalOutput must be set to "true"  -->
+		<!--allowed values: {false, true} -->
+		<!--default: false-->
+		<BidirectionalOutput>false</BidirectionalOutput>
+		<!--SimilarityStrategy: optional-->
+		<!--having more than one similarity measure, the way to combine them is specified by similarityStrategy, for example if we are going to match entities that
+		  3gram(title)>0.8 and 3gram(author)>0.6, the similarityStrategy must be set to "and" or in short "2"-->
+		<!--allowed values: {{add, 1}, {and, 2}, {or, 3}} -->
+		<!--default: 2 -->
+		<SimilarityStrategy>and</SimilarityStrategy>
+		<!--SimilarityThreshold: optional-->
+		<!--if the similarity degree between pairs is more than or equal to SimilarityThreshold, there will be an edge between them  -->
+		<!--allowed values: any number -->
+		<!--default: 0-->
+		<SimilarityThreshold>0</SimilarityThreshold>
+		<!--SrcType: optional-->
+		<!--if edges are one-way, the source type can must be specified using SrcType tag. It is applicable having data from 2 sources.  -->
+		<!--allowed values: any string but the specified type, must exist -->
+		<!--default: ""-->
+		<SrcType></SrcType>
+		<!--blockingkeys: optional-->
+		<!--blocking keys can be specified in detail inside this tag. It is a kind of obligatory tag except using Cartesian Product -->
+		<blockingkeys>
+			<!--blockingkey: obligatory-->
+			<!--blocking key specifications can be specified using SrcType tag  -->
+			<blockingkey>
+				<!--method: obligatory-->
+				<!--the method used for blocking key generation can be specified using method tag  -->
+				<!--allowed values: {{PrefixLength, PL, 1}, {QGram, QG, 2}, {SuffixArray, SA, 3}, {WordTokenizer, WT, 4}, {FullAttribute, FA, 5}} -->
+				<method>PrefixLength</method>
+				<!--attribute: obligatory-->
+				<!--the attribute used for keygeneration  -->
+				<!--allowed values: {any string but the specified attribute, must exist for all vertices} -->
+				<attribute>0</attribute>
+				<!--blockingKeyParameters: optional-->
+				<!--some methods used for generating key sometimes have some input parameters that can be specified using blockingKeyParameters tag  -->
+				<blockingKeyParameters>
+					<!--ignoreCase: optional-->
+					<!--if it is set to true it converts the attribute which blocking key is made from to lower case  -->
+					<!--allowed values: false, true -->
+					<!--default: true-->
+					<ignoreCase>true</ignoreCase>
+					<!--integerParam: optional-->
+					<!--some key generation methods have an integer parameter, for example PrefixLength needs an integer for length  -->
+					<!--allowed values: any integer equal or more than 1 -->
+					<!--default: 1-->
+					<integerParam>1</integerParam>
+					<!--stringParam: optional-->
+					<!--some key generation methods have a string parameter, for example WordTokenizer needs a string for tokenizer  -->
+					<!--allowed values: any string -->
+					<!--default: ""-->
+					<stringParam></stringParam>
+					<!--doubleParam: optional-->
+					<!--some key generation methods have a double parameter, for example QGram needs a double for threshold  -->
+					<!--allowed values: any double -->
+					<!--default: 0-->
+					<doubleParam>0</doubleParam>
+				</blockingKeyParameters>
+			</blockingkey>
+		</blockingkeys>
+		<!--blocking: obligatory-->
+		<!--blocking methods can be specified in detail inside this tag -->
+		<blocking>
+			<!--method: optional-->
+			<!--the method used for blocking -->
+			<!--allowed values: {{CartesianProduct, CP, 1}, {StandardBlocking, SB, 2}, {SortedNeighborhood, SN, 3}, {SuffixArray, SA, 4},
+			{SetSimilarityJoin, SSJ, 5}} -->
+			<!--default: CartesianProduct-->
+			<!--Note: SA and SSJ methods are not tested on real datasets yet-->
+			<method>CartesianProduct</method>
+			<!--blocking: optional-->
+			<!--some methods used for blocking sometimes have some input parameters that can be specified using blockingParameters tag  -->
+			<blockingParameters>
+				<!--integerParam: optional-->
+				<!--some blocking methods have an integer parameter, for example SortedNeighborhood needs an integer for window size,
+				  or StandardBlocking, PairRange needs an integer as the ParallelismDegree which is the number of reduces-->
+				<!--allowed values: any integer -->
+				<!--default: 0-->
+				<integerParam>0</integerParam>
+				<!--doubleParam: optional-->
+				<!--some blocking methods have a double parameter, for example SetSimilarityJoin needs a double for threshold  -->
+				<!--allowed values: any double -->
+				<!--default: 0-->
+				<doubleParam>0</doubleParam>
+				<!--secondMethod: optional-->
+				<!--some blocking methods have need a second method. Currently, only SetSimilarityJoin needs a second method  -->
+				<!--allowed values: {Jaccard, J, 1}, {Dice, D, 2}, {Cosine, C, 3} -->
+				<!--default: Jaccard-->
+				<secondMethod>Jaccard</secondMethod>
+
+				<!--<MultiPassBlocking>false</MultiPassBlocking>-->
+				<!--<RunNo>1</RunNo>-->
+			</blockingParameters>
+		</blocking>
+		<!--similarityComponents: obligatory-->
+		<!--similarity method(s) can be specified in detail inside this tag -->
+		<similarityComponents>
+			<!--similarityComponent: obligatory-->
+			<!--similarity method can be specified in detail inside this tag -->
+			<similarityComponent>
+				<!--srcAttribute: obligatory-->
+				<!--the attribute used for similarity matching  -->
+				<!--allowed values: {any string but the specified attribute, must exist for all vertices} -->
+				<srcAttribute></srcAttribute>
+				<!--targetAttribute: obligatory-->
+				<!--the attribute used for similarity matching  -->
+				<!--allowed values: {any string but the specified attribute, must exist for all vertices} -->
+				<targetAttribute></targetAttribute>
+				<!--weight: optional-->
+				<!--having several similarity matching methods, a weight can be assigned to each -->
+				<!--allowed values: {any double} -->
+				<!--default: 1-->
+				<weight>1</weight>
+				<!--threshold: optional-->
+				<!--we can set a threshold for computed similarity degree. if the computed similarity degree is greater than threshld,
+				 an edge will be generated between relative entities.-->
+				<!--allowed values: {any double} -->
+				<!--default: 1-->
+				<threshold>0</threshold>
+				<!--method: optional-->
+				<!--the method used for compute similarity degree between pais is set in method tag-->
+				<!--allowed values: {{JaroWinkler, JW, 1},
+				{TruncateBegin, TB, 2},
+				{TruncateEnd, TE, 3},
+				{EditDistance, ED, 4},
+				{QGrams, QG, 5},
+				{MongeElkan, ME, 6},
+				{ExtendedJaccard, EJ, 7},
+				{LongestCommonSubstring, LCS, 8},
+				{NumeriacalSimilarityWithMaxDis, NSMD, 9},
+				{NumeriacalSimilarityWithMaxPercentg, NSMP, 10}} -->
+				<!--default: JaroWinkler-->
+				<method>JaroWinkler</method>
+				<!--similarityComponentParameters: optional-->
+				<!--some methods used for computing similarity have some input parameters that can be specified using similarityComponentParameters tag -->
+				<similarityComponentParameters>
+					<!--methodThreshold: optional-->
+					<!--we can set a threshold for computed similarity degree by the specified method. if the computed similarity degree is less than the
+					threshold, the return value of similarity method will be 0 -->
+					<!--allowed values: {any double} -->
+					<!--default: 0-->
+					<methodThreshold>0</methodThreshold>
+					<!--secondMethod: optional-->
+					<!--some similarity methods needs a second method to compute the final similarity degree. for exmple QGram method
+					 can compute the final similaruty degree using Overlap or Jaccard or Dice. Currenltly QGram and  LongestCommonSubstring
+					 has second method-->
+					<!--allowed values: {{Overlap, O, 1}, {Jaccard, J, 2}, , {Dice, D, 3}} -->
+					<!--default: Jaccard-->
+					<secondMethod>Jaccard</secondMethod>
+					<!--secondMethodThreshold: optional-->
+					<!--Currently ExtendedJaccard method use Jaccard to compute similarity degree. This tag specifies the threshold that inside Jaccard method
+					applies.-->
+					<!--allowed values: {any double} -->
+					<!--default: 0-->
+					<secondMethodThreshold>0</secondMethodThreshold>
+					<!--booleanParam: optional-->
+					<!--some methods needs a boolean as an input parameter, forexample QGram take a boolean for padding-->
+					<!--allowed values: {true, false} -->
+					<!--default: false-->
+					<booleanParam>false</booleanParam>
+					<!--integerParam: optional-->
+					<!--some methods needs an integer as an input parameter, forexample QGram take an integer for q-->
+					<!--allowed values: {any integer} -->
+					<!--default: 0-->
+					<integerParam>0</integerParam>
+					<!--stringParam: optional-->
+					<!--some methods needs a string as an input parameter, forexample MongeElkan take a string for tokenizer-->
+					<!--allowed values: {any string} -->
+					<!--default: ""-->
+					<stringParam>0</stringParam>
+					<!--doubleParam: optional-->
+					<!--some methods needs a double as an input parameter, forexample NumeriacalSimilarityWithMaxDis take a double for "max Tolerated Distance"-->
+					<!--allowed values: {any double} -->
+					<!--default: 0-->
+					<doubleParam>0</doubleParam>
+				</similarityComponentParameters>
+			</similarityComponent>
+		</similarityComponents>
+	</run>
+</root>

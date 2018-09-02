@@ -1,0 +1,39 @@
+<root>
+   
+    <run>
+        <RunId>101</RunId>
+        <BidirectionalOutput>false</BidirectionalOutput>
+        <SimilarityStrategy>weighted</SimilarityStrategy> <!--Agggregationstrategy - here weighted  -->
+        <SimilarityThreshold>0.7</SimilarityThreshold>
+        <SrcType>dblp</SrcType>
+        <blockingkeys>
+            <blockingkey>
+                <method>PrefixLength</method>
+                <attribute>title</attribute>
+                <blockingKeyParameters>
+                    <integerParam>3</integerParam>
+                </blockingKeyParameters>
+            </blockingkey>
+        </blockingkeys>
+        <blocking>
+            <method>StandardBlocking</method>
+            <blockingParameters>
+                <!--ReducerNo (ParallelismDegree), No. of CPU cores-->
+                <integerParam>4</integerParam>
+            </blockingParameters>
+        </blocking>
+        <similarityComponents>
+            <similarityComponent>
+                <srcAttribute>title</srcAttribute>
+                <targetAttribute>title</targetAttribute>
+                <threshold>0.1</threshold>
+                <method>QGrams</method>
+                <similarityComponentParameters>
+                    <secondMethod>Dice</secondMethod>
+                    <integerParam>3</integerParam>
+                </similarityComponentParameters>
+            </similarityComponent>
+        </similarityComponents>
+    </run>
+   
+</root>

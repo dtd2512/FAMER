@@ -1,0 +1,96 @@
+<root>
+	<!--Phase: obligatory-->
+	<Phase>
+		<!--PhaseTitle: obligatory-->
+		<!--allowed values: {ReadGraph, PrepareForGraphVis, Clustering, Evaluation, Diagnose, OverlapResolve, MultiEntityPerSourceResolve, RemoveIntraClustersLinks, WriteGraph} -->
+		<PhaseTitle>ReadGraph</PhaseTitle>
+		<!--GraphPath: for READGRAPH and WRITEGRAPH: obligatory, o.w: optional-->
+		<GraphPath>/file/graphs/graph1/</GraphPath>
+		<!--GraphHeadFileName: optional-->
+		<!--default: graphHeads-->
+		<GraphHeadFileName>graphHeads</GraphHeadFileName>
+		<!--GraphVerticesFileName: optional-->
+		<!--default: vertices -->
+		<GraphVerticesFileName>vertices</GraphVerticesFileName>
+		<!--GraphEdgesFileName: optional-->
+		<!--default: edges -->
+		<GraphEdgesFileName>edges</GraphEdgesFileName>
+		<!--SecondGraphPath: for CompareClusterings: obligatory, o.w: no need-->
+		<SecondGraphPath>/file/graphs/graph2/</SecondGraphPath>
+		<!--SecondGraphHeadFileName: optional-->
+		<!--default: graphHeads-->
+		<SecondGraphHeadFileName>graphHeads</SecondGraphHeadFileName>
+		<!--SecondGraphHeadFileName: optional-->
+		<!--default: vertices -->
+		<SecondGraphVerticesFileName>vertices</SecondGraphVerticesFileName>
+		<!--SecondGraphHeadFileName: optional-->
+		<!--default: edges -->
+		<SecondGraphEdgesFileName>edges</SecondGraphEdgesFileName>
+		<!--ClusteringMethod: for CLUSTERING: obligatory, o.w: no need-->
+		<!--allowed values: {CONCOM, CORRELATION_CLUSTERING, CENTER, MERGE_CENTER, STAR1, STAR2} -->
+		<ClusteringMethod>CONCOM</ClusteringMethod>
+		<!--ClusteringMethod: for CLUSTERING: optional, o.w: no need-->
+		<!--default: false -->
+		<IsEdgeBidirection>false</IsEdgeBidirection>
+		<!--ClusteringOutputType: for CLUSTERING: obligatory, o.w: no need-->
+		<!--allowed values: {{Graph, GraphCollection}} -->
+		<!--default: Graph -->
+		<ClusteringOutputType>Graph</ClusteringOutputType>
+		<!--EvaluationType: for EVALUATION: obligatory, o.w: no need-->
+		<!--allowed values: {InputGraph, Clustering, OverlapResolve, MultiEntityPerSourceResolve}: it specifies the previous phase of EVALUATION -->
+		<!--default: InputGraph -->
+		<EvaluationType></EvaluationType>
+		<!--GraphPath: for EVALUATION and PREPAREFORGRAPHVIS:
+		obligatory, o.w: no need, if phase type is EVALUATION and this tag is empty, evaluation will be done using sameIds-->
+		<!--default: ""-->
+		<PerfectMatchFilePath></PerfectMatchFilePath>
+		<!--GraphPath: for EVALUATION: obligatory, o.w: no need.-->
+		<!--default: "recId"-->
+		<VertexIdLabel></VertexIdLabel>
+		<!--GraphPath: for Evaluation & CompareClusterings: obligatory, o.w: no need-->
+		<EvaluationOutputFilePath></EvaluationOutputFilePath>
+		<!--EvaluationRecordComment: for EVALUATION: optional, o.w: no need.-->
+		<!--allowed values: any String-->
+		<!--default: ""-->
+		<EvaluationRecordComment></EvaluationRecordComment>
+		<!--HasOverlap: for clustering EVALUATION: obligatory, o.w: no need-->
+		<!--allowed values: {true, false} -->
+		<!--default: false-->
+		<HasOverlap></HasOverlap>
+		<!--DiagnoseType: for DIAGNOSE: obligatory, o.w: no need-->
+		<!--allowed values: {{overlap, 1}, {multiEntityPerSrc, 2}} -->
+		<!--default: "2"-->
+		<DiagnoseType></DiagnoseType>
+		<!--DiagnoseFileOutputPath: for DIAGNOSE: optional, o.w: no need-->
+		<!--allowed values: String -->
+		<!--default: ""-->
+		<DiagnoseFileOutputPath></DiagnoseFileOutputPath>
+		<!--DiagnoseStatisticsFileOutputPath: for DIAGNOSE: optional, o.w: no need-->
+		<!--allowed values: String -->
+		<!--default: ""-->
+		<DiagnoseStatisticsFileOutputPath></DiagnoseStatisticsFileOutputPath>
+		<!--LinkValidationPropertyTitle: for PREPAREFORGRAPHVIS: obligatory, o.w: no need, it is PerfectMatchClusterId if it is embedded in vertices instead of having perfectMatch file
+		or RecordId if we have perfectmatch file-->
+		<!--allowed values: String -->
+		<LinkValidationPropertyTitle></LinkValidationPropertyTitle>
+
+		<!--VertexVis_LabelProperties: for PREPAREFORGRAPHVIS: obligatory, o.w: no need-->
+		<VertexVis_LabelProperties><!--it is a collection-->
+			<Property>
+				<PropertyTitle></PropertyTitle>
+				<StartIndex></StartIndex><!--default: -1-->
+				<EndIndex></EndIndex><!--default: -1-->
+			</Property>
+		</VertexVis_LabelProperties>
+
+		<!--Delta: for PREPAREFORGRAPHVIS: obligatory, o.w: no need-->
+		<!--allowed values: Double -->
+		<!--default: 0-->
+		<Delta></Delta>
+
+		<!--RequiredIdTitle: for WRITEGRAPH, MultiEntityPerSourceResolve: obligatory, o.w: no need-->
+		<!--allowed values: {1, 2, 3, ...., no of available cores} -->
+		<!--if it is not set, max no of available cores is considered-->
+		<ParallelismDegree></ParallelismDegree>
+	</Phase>
+</root>
